@@ -1,5 +1,6 @@
 package com.example.shoppingapp.controller;
 
+import com.example.shoppingapp.service.NotificationService;
 import com.example.shoppingapp.shoppingcart.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,8 +15,11 @@ import java.util.List;
 public class CartController {
 
     private final ShoppingCart cart;
-    public CartController(ShoppingCart cart){
+    private final NotificationService notificationService;
+    public CartController(ShoppingCart cart, NotificationService notificationService){
         this.cart = cart;
+        this.notificationService = notificationService;
+
     }
 @GetMapping("/add")
 public void addItems (String item){

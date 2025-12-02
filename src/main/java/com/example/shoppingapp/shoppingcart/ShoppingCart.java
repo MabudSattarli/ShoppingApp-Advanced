@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@Scope(value = "singleton", proxyMode = ScopedProxyMode.TARGET_CLASS)
+@Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class ShoppingCart {
 
 private List<String> cartItems = new ArrayList<>();
