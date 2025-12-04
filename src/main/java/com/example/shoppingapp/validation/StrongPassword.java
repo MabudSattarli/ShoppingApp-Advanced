@@ -7,7 +7,7 @@ import java.lang.annotation.*;
 
 @Documented
 @Constraint(validatedBy = StrongPasswordValidator.class)
-@Target({ElementType.FIELD, ElementType.Method})
+@Target({ElementType.FIELD, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface StrongPassword {
 
