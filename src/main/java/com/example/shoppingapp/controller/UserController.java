@@ -8,14 +8,20 @@ import com.example.shoppingapp.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+import com.example.shoppingapp.service.UserExportService;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
+    private final Optional<UserExportService> exportService;
 
-    public UserController(UserService userService){
+    public UserController(UserService userService, Optional<UserExportService> exportService){
         this.userService = userService;
+        this.exportService = exportService;
     }
 
     @GetMapping("/{id}")
@@ -39,6 +45,7 @@ public class UserController {
     }
 
     @GetMapping("/transaction/{name}")
+    @RateLimit(limit = 2, duration = 60)
     public String testTransaction(@PathVariable String name) {
         userService.createUserInTransaction(name);
         return "Əməliyyat bitdi: " + name;
@@ -52,6 +59,10 @@ public class UserController {
             // Əgər Feature Flag = false olarsa, bura işləyəcək
             return "TƏƏSSÜF Kİ: Bu xidmət hazırda aktiv deyil (Feature Disabled).";
         }
+    }
+    @GetMapping("/all")
+    public List<User> getAllUsers() {
+        return userService.getAllUsersForCurrentTenant();
     }
 
 }
